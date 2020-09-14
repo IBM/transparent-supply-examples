@@ -1,9 +1,9 @@
 openapi: "3.0.0"
 info:
   version: 2.0.0
-  title: IFT Trace API Extensions
+  title: Trace API Examples
   description: |
-    The Trace API Extensions is a set of example scenarios showing some use cases of the IBM Trace API. Below are some recall scenarios that allow callers to determine the impact of a recall, specifying a location where a recall is initiated from, a list of GTINs harvested at that location, and a date range for harvest.
+    The Trace API Examples are a set of example scenarios showing some use cases of the IBM Blockchain Transparent Supply API. Below are some recall scenarios that allow callers to determine the impact of a recall, specifying a location where a recall is initiated from, a list of GTINs harvested at that location, and a date range for harvest.
 
     Given that information, there are endpoints to determine:
     * EPCs harvested
@@ -13,11 +13,11 @@ info:
 
     # Authorization to use the Trace API Extensions
 
-    Only authorized users with a <b>registered IBMid</b> can make IBM Food Trust&trade; API calls. If necessary, contact your IBM Food Trust Organization Administrator for authorization to use this API.
+    Only authorized users with a <b>registered IBMid</b> can make IBM Blockchain Transparent Supply&trade; API calls. If necessary, contact your IBM Blockchain Transparent Supply Organization Administrator for authorization to use this API.
 
     Authenticate with your registered IBMid, as follows:
 
-    1. Open the [IBM Blockchain Solution Manager](https://food.ibm.com/ift/api/identity-proxy/login) page in a new tab or window.
+    1. Open the [IBM Blockchain Solution Manager](https://developer.transparentsupply.ibm.com/ift/api/identity-proxy/login) page in a new tab or window.
     2. Log in with your IBMid, and if necessary, select your Organization.
     3. Click **Copy** to copy the User Token.
     4. Return to this page and click the green **Authorize** button on the lower right.
@@ -102,13 +102,13 @@ components:
     productId:
       name: product_id[]
       in: query
-      description: restrict results to any of the GS1 GTINs (numeric) or IBM Food Trust Product Identifiers (URN) provided. maximum number of items is 30
+      description: restrict results to any of the GS1 GTINs (numeric) or IBM Blockchain Transparent Supply Product Identifiers (URN) provided. maximum number of items is 30
       schema:
         $ref: '#/components/schemas/productId'
     locationId:
       name: location_id[]
       in: query
-      description: restrict results to the specified GS1 GLN (numeric) or IBM Food Trust Location Identifier (URN) provided.
+      description: restrict results to the specified GS1 GLN (numeric) or IBM Blockchain Transparent Supply Location Identifier (URN) provided.
       schema:
         $ref: '#/components/schemas/string'
     eventStartTimestamp:

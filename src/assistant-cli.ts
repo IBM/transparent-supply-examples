@@ -9,7 +9,7 @@ import * as _ from 'lodash';
 const fs = require('fs');
 
 const helpString = `
-==IFT Recall Assistant CLI==
+==Recall Assistant CLI==
 usage: node ${require.main.filename} endpoint [-h] [-b BEARER] [--outputFile PATH] [--** [PARAM]]
 usage: npm run cli -- endpoint [-h] [-b BEARER] [--outputFile PATH] [--** [PARAM]]
 
@@ -19,7 +19,7 @@ arguments:
 optional arguments:
   -h, --help              show this help message and exit
 
-  -b, --bearer BEARER     the bearer authentication token for IFT
+  -b, --bearer BEARER     the bearer authentication token
 
   --outputFile PATH       path to the file you want to save the output to (if
                           not provided, will print to console)
@@ -29,12 +29,12 @@ optional arguments:
                           separated values
 Available PARAMs:
   --product_id            restrict results to any of the GS1 GTINs (numeric) or
-                          IBM Food Trust Product Identifiers (URN) provided.
+                          IBM Blockchain Transparent Supply Product Identifiers (URN) provided.
                           maximum number of items is 30
                           to provide more than 1: --product_id ** --product_id **
 
   --location_id           restrict results to the specified GS1 GLN (numeric) or
-                          IBM Food Trust Location Identifier (URN) provided.
+                          IBM Blockchain Transparent Supply Location Identifier (URN) provided.
                           to provide more than 1: --location_id ** --location_id **
 
   --event_start_timestamp restrict results to records with an event timestamp on

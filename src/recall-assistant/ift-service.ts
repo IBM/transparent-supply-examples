@@ -11,15 +11,15 @@ export const constants = {
   URN_GS1_SGLN: 'urn:epc:id:sgln:',
   // URN for GS1 standard SGTIN
   URN_GS1_SGTIN: 'urn:epc:id:sgtin:',
-  // URN for IFT standard SGTIN
-  URN_IFT_SGTIN: 'urn:ibm:ift:product:serial:obj:',
+  // URN for standard SFTPI
+  URN_SFTPI: 'urn:ibm:ift:product:serial:obj:',
   // URN for GS1 SGTIN without no lots
   URN_PAT_SGTIN: 'urn:epc:idpat:sgtin:',
   // URN for GS1 standard LGTIN
   URN_GS1_LGTIN: 'urn:epc:class:lgtin:',
-  // URN for IFT standard LGTIN
-  URN_IFT_LGTIN: 'urn:ibm:ift:product:lot:class:',
-  // URN for IFT GTIN
+  // URN for LFTPI
+  URN_LFTPI: 'urn:ibm:ift:product:lot:class:',
+  // URN for Product
   URN_IFT_GTIN: 'urn:ibm:ift:product:class:',
 };
 
@@ -46,7 +46,7 @@ export function getTraceConstraintParameters(location_id: string,
  * and returns the entire list as one
  *
  * @param options options for rp call
- * @param traceParameters parameters for call to IFT API
+ * @param traceParameters parameters for call to API
  * @param pageURI function that produces the URI for each page
  */
 function paginate_rp(options,
@@ -80,9 +80,9 @@ export async function getEpcs(req) {
                                                                req.query.product_id,
                                                                req.query.event_start_timestamp,
                                                                req.query.event_end_timestamp);
-  const traceCallUri = `${config.ift_url}/events?event_type[]=commission${traceRestraintParameters}`;
+  const traceCallUri = `${config.base_url}/events?event_type[]=commission${traceRestraintParameters}`;
   console.info(`Trace call to get harvested EPCs: ${traceCallUri}`);
-  /* Example: "https://food.ibm.com/ift/api/outbound/v2/events?event_type[]=commission&location_id[]=urn
+  /* Example: "https://developer.transparentsupply.ibm.com/ift/api/outbound/v2/events?event_type[]=commission&location_id[]=urn
      %3Aibm%3Aift%3Alocation%3Aloc%3A1953084565871.PMA_Salinas&product_id[]=urn%3Aibm%3Aift%3Aproduct%3A
      class%3A1953084565871.pFOa&product_id[]=urn%3Aibm%3Aift%3Aproduct%3Aclass%3A1953084565871.APJj&
      event_start_timestamp=2019-11-15&event_end_timestamp=2019-11-30" */
@@ -139,9 +139,9 @@ export async function getTransformOutputEpcs(req, inputEpcs: string[]) {
 
     eventsList.push(...await paginate_rp(options, epcIds, (pagedEPC) => {
       const eventCallUriParamWithEPC = `${pagedEPC && pagedEPC.length > 0 ? `&epc_id[]=${pagedEPC.join('&epc_id[]=')}` : ''}`;
-      const eventsCallUri = `${config.ift_url}/events?event_type[]=transformation${eventCallUriParamWithEPC}`;
+      const eventsCallUri = `${config.base_url}/events?event_type[]=transformation${eventCallUriParamWithEPC}`;
       console.info(`Trace call to get tranformations from impacted EPCs: ${eventsCallUri}`);
-      /* Example: https://food.ibm.com/ift/api/outbound/v2/events?event_type[]=transformation&event_start_timestamp=
+      /* Example: https://developer.transparentsupply.ibm.com/ift/api/outbound/v2/events?event_type[]=transformation&event_start_timestamp=
           2019-11-15&epc_id[]=urn%3Aibm%3Aift%3Aproduct%3Alot%3Aclass%3A1953084565871.APJj.2322&epc_id[]=urn%3Aibm%3A
           ift%3Aproduct%3Alot%3Aclass%3A1953084565871.pFOa.2131212 */
       return eventsCallUri;
@@ -179,9 +179,9 @@ export async function getTransactions(req, inputEpcs: string[]) {
     eventsList.push(...await paginate_rp(options, epcIds, (pagedEPC) => {
       // form the URL and make the calls
       const eventCallUriParamWithEPC = `${pagedEPC && pagedEPC.length > 0 ? `&epc_id[]=${pagedEPC.join('&epc_id[]=')}` : ''}`;
-      const eventCallUri = `${config.ift_url}/events?event_type[]=aggregation${eventCallUriParamWithEPC}`;
+      const eventCallUri = `${config.base_url}/events?event_type[]=aggregation${eventCallUriParamWithEPC}`;
       console.info(`Trace call to get transactions from impacted EPCs: ${eventCallUri}`);
-      /* Example: "https://food.ibm.com/ift/api/outbound/v2/events?event_type[]=aggregation&event_start_timestamp=
+      /* Example: "https://developer.transparentsupply.ibm.com/ift/api/outbound/v2/events?event_type[]=aggregation&event_start_timestamp=
          2019-11-15&epc_id[]=urn%3Aibm%3Aift%3Aproduct%3Alot%3Aclass%3A1953084565871.APJj.2322&epc_id[]=urn%3Aibm%3
          Aift%3Aproduct%3Alot%3Aclass%3A1953084565871.pFOa.2131212&epc_id[]=urn%3Aibm%3Aift%3Aproduct%3Alot%3Aclass
          %3A1953084565871.OdCD.475" */
@@ -227,7 +227,7 @@ export async function getProductLotsAndSerials(req) {
                                                           req.query.product_id,
                                                           req.query.event_start_timestamp,
                                                           req.query.event_end_timestamp);
-  const lotsAndSerialsCallUri = `${config.ift_url}/lots_and_serials?limit=500&${restraintParameters}`;
+  const lotsAndSerialsCallUri = `${config.base_url}/lots_and_serials?limit=500&${restraintParameters}`;
   console.info(`Trace call to get product lots and serial EPCs: ${lotsAndSerialsCallUri}`);
 
   const options = {
@@ -280,7 +280,7 @@ export async function getEvents(req, inputAssetIds: string[], eventTypes: string
       // const eventEndTimeParams = getTraceConstraintParameters('', [], '', req.query.event_end_timestamp);
       // Since we want to filter by commission time, no need to filter by event_end_timestamp here
       const eventEndTimeParams = '';
-      const eventCallUri = `${config.ift_url}/events?${(!(eventTypes && eventTypes.length)) ? '' : `event_type[]=${eventTypes.join('&event_type[]=')}`}${
+      const eventCallUri = `${config.base_url}/events?${(!(eventTypes && eventTypes.length)) ? '' : `event_type[]=${eventTypes.join('&event_type[]=')}`}${
         eventCallUriParamWithAssets}${eventBizStep}${eventEndTimeParams}`;
       console.info(`Trace call to get all events from asset ids: ${eventCallUri}`);
 
@@ -309,7 +309,7 @@ export async function runTrace(req,
   if (inputEPCs && inputEPCs.length > 0) {
     inputEPCs.forEach(epcId => {
       // foreach EPC trace upstream
-      const traceUri = `${config.ift_url}/epcs/${epcId}/trace?depth=${constants.DEPTH}${
+      const traceUri = `${config.base_url}/epcs/${epcId}/trace?depth=${constants.DEPTH}${
         traceOptions.upstream ? `&upstream=true` : ''}${
           traceOptions.downstream ? `&downstream=true` : ''}`;
       console.info(`Trace call to get the EPC/trace: ${traceUri}`);
@@ -353,7 +353,7 @@ export async function getLocationsData(req, locationIds: any[]) {
 
     locations.push(...await paginate_rp(options, locationIds, (pagedLocations) => {
       // form the URL and make the calls
-      const locationsUri = `${config.ift_url}/locations?${pagedLocations && pagedLocations.length > 0
+      const locationsUri = `${config.base_url}/locations?${pagedLocations && pagedLocations.length > 0
         ? `location_id[]=${pagedLocations.join('&location_id[]=')}` : ''}`;
       console.info(`Trace call to get location data: ${locationsUri}`);
 
@@ -385,7 +385,7 @@ export async function getProductsData(req, productIds) {
 
     products.push(...await paginate_rp(options, productIds, (pagedProducts) => {
       // form the URL and make the calls
-      const productUri = `${config.ift_url}/products?${pagedProducts && pagedProducts.length > 0
+      const productUri = `${config.base_url}/products?${pagedProducts && pagedProducts.length > 0
         ? `product_id[]=${pagedProducts.join('&product_id=')}` : ''}`;
       console.info(`Trace call to get product data: ${productUri}`);
 
@@ -517,7 +517,7 @@ export async function getTransactionsData(req, transactionIds, type) {
     // loop through the locationIds 30 or PAGE_SIZE at a time
     transactions.push(...await paginate_rp(options, transactionIds, (pagedTransactions) => {
       // form the URL and make the calls
-      const transactionsUri = `${config.ift_url}/transactions/${
+      const transactionsUri = `${config.base_url}/transactions/${
       type && type === 'PO' ? 'purchase_orders' : type === 'DA' ? 'despatch_advices' : type === 'RA' ? 'receive_advices' : '' }?${
       pagedTransactions && pagedTransactions.length > 0 ? `transaction_id[]=${pagedTransactions.join('&transaction_id[]=')}` : ''}`;
       console.info(`Trace call to get transaction PO data: ${transactionsUri}`);
@@ -546,9 +546,8 @@ export function getLGTIN(epc: any): { gtin: string, lotOrSerialNo: string, valid
   let gtin;
   let lot;
 
-  // handle IFT-issued (non-GS1)
-  if (epc && epc.indexOf(constants.URN_IFT_LGTIN) >= 0) {  // IFT ID
-    epcClass = explode(epc, constants.URN_IFT_LGTIN);
+  if (epc && epc.indexOf(constants.URN_LFTPI) >= 0) {  // LFTPI (non-GS1)
+    epcClass = explode(epc, constants.URN_LFTPI);
     subProductNo1 = explode(epcClass, '.', 0);
     subProductNo2 = explode(epcClass, '.', 1);
     gtin = `${constants.URN_IFT_GTIN}${subProductNo1}.${subProductNo2}`;
@@ -596,8 +595,8 @@ export function getSGTIN(epc: any): { gtin: string, lotOrSerialNo: string, valid
     const lastDigit = calcCheckDigit(partialGTIN);
     gtin = `${partialGTIN}${lastDigit}`;
     serialNo = explode(epcClass, '.', 2);
-  } else if (epc && epc.indexOf(constants.URN_IFT_SGTIN) >= 0) {  // IFT ID
-    epcClass = explode(epc, constants.URN_IFT_SGTIN);
+  } else if (epc && epc.indexOf(constants.URN_SFTPI) >= 0) {  // SFTPI (non-GS1)
+    epcClass = explode(epc, constants.URN_SFTPI);
     subProductNo1 = explode(epcClass, '.', 0);
     subProductNo2 = explode(epcClass, '.', 1);
     gtin = `${constants.URN_IFT_GTIN}${subProductNo1}.${subProductNo2}`;
@@ -658,11 +657,11 @@ function calcCheckDigit(s: string): number {
 export function getProductFromEpc(epc: string) {
   let product;
   if (epc && ((epc.indexOf(constants.URN_GS1_SGTIN) >= 0) ||
-    (epc.indexOf(constants.URN_IFT_SGTIN) >= 0) ||
+    (epc.indexOf(constants.URN_SFTPI) >= 0) ||
     (epc.indexOf(constants.URN_PAT_SGTIN) >= 0))) {
     product = getSGTIN(epc);
   } else if (epc && ((epc.indexOf(constants.URN_GS1_LGTIN) >= 0) ||
-    (epc.indexOf(constants.URN_IFT_LGTIN) >= 0))) {
+    (epc.indexOf(constants.URN_LFTPI) >= 0))) {
     product = getLGTIN(epc);
   }
   return product;

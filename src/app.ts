@@ -3,7 +3,7 @@ import * as swaggerUi from 'swagger-ui-express';
 import * as http from 'http';
 
 export const config = {
-  ift_url: 'https://food.ibm.com/ift/api/outbound/v2', // The URL of the IFT environment you are running against
+  base_url: 'https://developer.transparentsupply.ibm.com//ift/api/outbound/v2', // The URL of the environment you are running against
   host: 'https://localhost',
   port: 5474
 };
