@@ -2,7 +2,7 @@ import * as _ from 'lodash';
 import {
   getProductFromEpc,
   getProductsData
-} from './ift-service';
+} from './transparent-supply-service';
 
 /**
  * CSVRow object to standardize order of output as well as easily

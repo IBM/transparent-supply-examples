@@ -27,7 +27,7 @@ info:
     You are now authorized to use this API. For subsequent sessions, repeat the steps above to obtain a new User Token.
 
 servers:
-  - url: '/ift/api-samples/recall-assistant/v1'
+  - url: '/api-samples/recall-assistant/v1'
 
 paths:
   /harvested-epcs:

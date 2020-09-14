@@ -3,14 +3,14 @@ import * as swaggerUi from 'swagger-ui-express';
 import * as http from 'http';
 
 export const config = {
-  base_url: 'https://developer.transparentsupply.ibm.com//ift/api/outbound/v2', // The URL of the environment you are running against
+  base_url: 'https://developer.transparentsupply.ibm.com/ift/api/outbound/v2', // The URL of the environment you are running against
   host: 'https://localhost',
   port: 5474
 };
 
 import { TraceAssistantRouter } from './recall-assistant/router';
 // Version Routers
-const baseUrl = '/ift/api-samples';
+const baseUrl = '/api-samples';
 
 if (require.main === module) {
   const app = express();

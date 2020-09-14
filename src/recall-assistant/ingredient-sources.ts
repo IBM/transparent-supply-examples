@@ -2,7 +2,7 @@ import { config } from '../app';
 import * as rp from 'request-promise-native';
 import * as _ from 'lodash';
 
-import * as ift_service from './ift-service';
+import * as ift_service from './transparent-supply-service';
 import * as format from './format';
 import {
   processParentAssets as processParentAssets,

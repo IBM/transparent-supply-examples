@@ -1,5 +1,5 @@
 
-import { getEpcs, getTransformOutputEpcs, getTransactions } from './ift-service';
+import { getEpcs, getTransformOutputEpcs, getTransactions } from './transparent-supply-service';
 import { getSourceEPCData } from './retailer-actions';
 import { getIngredientSources } from './ingredient-sources';
 

@@ -1,6 +1,6 @@
 // Test Libraries
 import { expect } from 'chai';
-import { getTraceConstraintParameters } from '../../../recall-assistant/ift-service';
+import { getTraceConstraintParameters } from '../../../recall-assistant/transparent-supply-service';
 
 describe('Testing getTraceConstraintParameters', function () {
   describe('ensure correct url creation', function () {

@@ -24,7 +24,7 @@ This endpoint will provide a list of ingredients and the source locations alongs
    - `npm install`
    - `npm run build`
    - `npm run start`
-3) From your browser, open http://localhost:5474/ift/api-samples/recall-assistant/v1/swagger/
+3) From your browser, open http://localhost:5474/api-samples/recall-assistant/v1/swagger/
 
 There is also the option to use our command line interface
 1) Clone the code locally
