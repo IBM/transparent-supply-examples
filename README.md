@@ -1,7 +1,9 @@
 Welcome to the IBM Blockchain Transparent Supply&trade; Examples!
 
 # Trace API examples
-The code in this repository is intended to be a collection of code examples that exemplify the capabilities of the IBM Blockchain Transparent Supply API.  Currently this is focused only on the Trace APIs, defined here: http://developer.transparentsupply.ibm.com/ift/api/outbound/api-docs/.  These examples show how to access your entitled data in Blockchain Transparent Supply to solve real world problems.
+The code in this repository is intended to be a collection of code examples that exemplify the capabilities of the IBM Blockchain Transparent Supply API.  Currently this is focused only on the Trace APIs, defined here: http://developer.transparentsupply.ibm.com/ift/api/outbound/api-docs/ *.  These examples show how to access your entitled data in Blockchain Transparent Supply to solve real world problems.
+
+*\* All references to URLs containing developer.transparentsupply.ibm.com require signing up for a trial to the Transparent Supply Developer Playground to get access, but can be replaced with the base domain for any existing IBM Food Trust or Blockchain Transparent Supply customers (e.g. food.ibm.com)*
 
 ## harvested-epcs
 This returns a list of EPCs that were harvested from a particular location within a particular timeframe, for a set of GTINs (product IDs).  This leverages the 'events' endpoint.
@@ -34,3 +36,6 @@ There is also the option to use our command line interface
 3) Run either of the following commands to see the parameters available parameters
    - `npm run cli -- -h`
    - `node bin/assistant-cli.js -h`
+
+### Product and facility IDs
+This application requires entering product and facility identifiers as inputs. The [products page](https://developer.transparentsupply.ibm.com/manage-data/products) and [facilities page](https://developer.transparentsupply.ibm.com/manage-data/facilities) shows the products available if you choose "All" from the Organization selector. Please note that products and facility identifiers will show in a truncated format if they leverage an [IBM solution identifier](https://developer.transparentsupply.ibm.com/ift/help/reference/solution-identifiers), so *urn:ibm:ift:product:class:* may need to be prepended to a product ID or *urn:ibm:ift:location:loc:* to a facility ID if values are copied from those pages.
