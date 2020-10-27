@@ -36,7 +36,7 @@ if (require.main === module) {
 
   // Start server
   http.createServer(app).listen(config.port);
-  console.info(`server is up at ${config.port}`);
+  console.info(`server is up at ${config.port}.  Access recall assistant at http://localhost:${config.port}/api-samples/recall-assistant/v1/swagger`);
 
   module.exports = {};
 }
