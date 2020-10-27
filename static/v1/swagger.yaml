@@ -35,7 +35,7 @@ paths:
       summary: Return EPCs that we harvested with the matching criteria
       parameters:
         - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/productId'
+        - $ref: '#/components/parameters/productIdCommissionedIngredient'
         - $ref: '#/components/parameters/eventStartTimestamp'
         - $ref: '#/components/parameters/eventEndTimestamp'
         - $ref: '#/components/parameters/output'
@@ -48,7 +48,7 @@ paths:
       summary: Return EPCs that contain any of the the matching data as ingredients
       parameters:
         - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/productId'
+        - $ref: '#/components/parameters/productIdCommissionedIngredient'
         - $ref: '#/components/parameters/eventStartTimestamp'
         - $ref: '#/components/parameters/eventEndTimestamp'
         - $ref: '#/components/parameters/output'
@@ -61,7 +61,7 @@ paths:
       summary: Return transactions (POs and DAs) that contain impacted EPCs
       parameters:
         - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/productId'
+        - $ref: '#/components/parameters/productIdCommissionedIngredient'
         - $ref: '#/components/parameters/eventStartTimestamp'
         - $ref: '#/components/parameters/eventEndTimestamp'
         - $ref: '#/components/parameters/output'
@@ -73,7 +73,7 @@ paths:
     get:
       summary: Return EPCs that were used in the transformation on the searched product
       parameters:
-        - $ref: '#/components/parameters/productId'
+        - $ref: '#/components/parameters/productIdFinishedGood'
         - $ref: '#/components/parameters/eventStartTimestamp'
         - $ref: '#/components/parameters/eventEndTimestamp'
         - $ref: '#/components/parameters/output'
@@ -84,7 +84,7 @@ paths:
     get:
       summary: Return EPCs that were the results of transformations from the searched product
       parameters:
-        - $ref: '#/components/parameters/productId'
+        - $ref: '#/components/parameters/productIdIngredient'
         - $ref: '#/components/parameters/eventStartTimestamp'
         - $ref: '#/components/parameters/eventEndTimestamp'
         - $ref: '#/components/parameters/output'
@@ -99,28 +99,40 @@ components:
       scheme: bearer
       bearerFormat: JWT
   parameters:
-    productId:
+    productIdFinishedGood:
       name: product_id[]
       in: query
-      description: restrict results to any of the GS1 GTINs (numeric) or IBM Blockchain Transparent Supply Product Identifiers (URN) provided. maximum number of items is 30
+      description: restrict results to any of the GS1 GTINs (numeric) or IBM Blockchain Transparent Supply Product Identifiers (URN) provided. maximum number of items is 30.  e.g urn:ibm:ift:product:class:7055812837404.packe2_323e8524
+      schema:
+        $ref: '#/components/schemas/productId'
+    productIdIngredient:
+      name: product_id[]
+      in: query
+      description: restrict results to any of the GS1 GTINs (numeric) or IBM Blockchain Transparent Supply Product Identifiers (URN) provided. maximum number of items is 30.  e.g urn:ibm:ift:product:class:7055812837404.grade1_323e8524
+      schema:
+        $ref: '#/components/schemas/productId'
+    productIdCommissionedIngredient:
+      name: product_id[]
+      in: query
+      description: restrict results to any of the GS1 GTINs (numeric) or IBM Blockchain Transparent Supply Product Identifiers (URN) provided. maximum number of items is 30.  e.g urn:ibm:ift:product:class:7055812837404.flowe0_323e8524
       schema:
         $ref: '#/components/schemas/productId'
     locationId:
       name: location_id[]
       in: query
-      description: restrict results to the specified GS1 GLN (numeric) or IBM Blockchain Transparent Supply Location Identifier (URN) provided.
+      description: restrict results to the specified GS1 GLN (numeric) or IBM Blockchain Transparent Supply Location Identifier (URN) provided.  e.g. urn:ibm:ift:location:loc:7055812837404.growe0_323e8524
       schema:
         $ref: '#/components/schemas/string'
     eventStartTimestamp:
       name: event_start_timestamp
       in: query
-      description: restrict results to records with an event timestamp on or after the timestamp (ISO 8601) provided, eg. 2019-11-15
+      description: restrict results to records with an event timestamp on or after the timestamp (ISO 8601) provided, eg. 2020-10-01
       schema:
         $ref: '#/components/schemas/string'
     eventEndTimestamp:
       name: event_end_timestamp
       in: query
-      description: restrict results to records with an event timestamp strictly before the timestamp (ISO 8601) provided, eg. 2019-11-30
+      description: restrict results to records with an event timestamp strictly before the timestamp (ISO 8601) provided, eg. 2020-10-03
       schema:
         $ref: '#/components/schemas/string'
     output:
